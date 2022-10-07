@@ -1,13 +1,23 @@
+import logging
 from os.path import join
 
 import yaml
 
-from telegram_parser.settings import BASE_DIR
+from configuration.apps import SETTING_DIR
 
-with open(join(BASE_DIR, 'configuration/config.yaml')) as base:
-    configBase = yaml.load(base, Loader=yaml.FullLoader)
-    print(configBase)
+_logger = logging.getLogger('custom')
 
-with open(join(BASE_DIR, 'configuration/config_db.yaml')) as db:
-    configDatabase = yaml.load(db, Loader=yaml.FullLoader)
-    print(configDatabase)
+
+def _loader(filename):
+	try:
+		with open(join(SETTING_DIR, filename)) as config:
+			result = yaml.load(config, Loader=yaml.FullLoader)
+			_logger.debug(filename + ' - loaded successfully')
+			return result
+	except IOError as e:
+		_logger.error(e)
+
+
+configBase = _loader('config.yaml')
+configDatabase = _loader('config_db.yaml')
+configResponse = _loader('config_response.yaml')

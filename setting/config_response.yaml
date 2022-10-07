@@ -1,0 +1,4 @@
+# Server
+
+server:
+  no_data: 'Something happened. Message administrator'
