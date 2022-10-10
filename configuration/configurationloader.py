@@ -18,6 +18,6 @@ def _loader(filename):
 		_logger.error(e)
 
 
-configBase = _loader('config.yaml')
-configDatabase = _loader('config_db.yaml')
+configBase = _loader('config_app.yaml')
+configService = _loader('config_services.yaml')[configBase['environment']]
 configResponse = _loader('config_response.yaml')

@@ -1,0 +1,19 @@
+# All services configuration
+
+  prod:
+    database:
+      mongo:
+        host: 192.168.190.56
+        port: 27017
+        user: app
+        password: dafUZT2dbOSp0BbcxADF
+        database: parser_telegram
+
+  test:
+    database:
+      mongo:
+        host: localhost
+        port: 27017
+        user: app
+        password: pasaword
+        database: parser_telegram

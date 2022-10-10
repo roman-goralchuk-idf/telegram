@@ -1,5 +1,6 @@
 # Application
 appName: TelegramParser
+environment: test #prod
 
 # Telegram API
 telegram:
