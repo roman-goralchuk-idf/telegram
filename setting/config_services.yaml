@@ -7,7 +7,7 @@
         port: 27017
         user: app
         password: dafUZT2dbOSp0BbcxADF
-        database: parser_telegram
+        databaseName: parser_telegram
 
   test:
     database:
@@ -16,4 +16,4 @@
         port: 27017
         user: app
         password: pasaword
-        database: parser_telegram
+        databaseName: parser_telegram
