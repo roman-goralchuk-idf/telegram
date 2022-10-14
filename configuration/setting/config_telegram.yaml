@@ -1,0 +1,26 @@
+# Telegram API
+
+account_1:
+  telegram:
+    api_id: 17436154
+    api_hash: e54c86627e6fed51dd4c548dfc920094
+    phone: +375293372269
+    session: session_account_1
+
+account_2:
+  telegram:
+    api_id: 19358343
+    api_hash: 691546d6af65c083cbadb4fa55889382
+    phone: +375445900823
+    session: session_account_2
+
+account_test:
+  telegram:
+    api_id: 17436154
+    api_hash: e54c86627e6fed51dd4c548dfc920094
+    phone: 9996621234
+    session: session_test
+    host: 149.154.167.40
+    port: 443
+    dc: 2
+    code: 22222

@@ -1,0 +1,4 @@
+# Application
+appName: TelegramParser
+environment: test #test #prod
+telegram_account: account_1 #account_2 #account_1 #account_test

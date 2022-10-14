@@ -10,4 +10,4 @@ class ConfigurationConfig(AppConfig):
     name = 'configuration'
 
 
-SETTING_DIR = join(BASE_DIR, 'setting')
+SETTING_DIR = join(BASE_DIR, 'configuration/setting')

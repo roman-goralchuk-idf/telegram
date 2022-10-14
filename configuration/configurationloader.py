@@ -21,3 +21,4 @@ def _loader(filename):
 configBase = _loader('config_app.yaml')
 configService = _loader('config_services.yaml')[configBase['environment']]
 configResponse = _loader('config_response.yaml')
+configTelegram = _loader('config_telegram.yaml')[configBase['telegram_account']]
