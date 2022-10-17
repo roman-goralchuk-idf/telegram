@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+
+  mongo:
+    image: mongo:3.6.21
+    volumes:
+      - mongodb-lib:/data/db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: app
+      MONGO_INITDB_ROOT_PASSWORD: pasaword
+    ports:
+      - "27017:27017"
+
+  mysqldb:
+    image: mysql:5.7
+    volumes:
+      - mysql-lib:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pasaword
+      MYSQL_DATABASE: mybase
+    ports:
+      - "3306:3306"
+
+volumes:
+  mongodb-lib:
+  mysql-lib:
