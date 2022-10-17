@@ -1,7 +1,7 @@
 import json
 import re
 
-from .DateEncoder import DateTimeEncoder
+from date_service import DateTimeEncoder
 
 
 async def getChannelInfo(name, client):
