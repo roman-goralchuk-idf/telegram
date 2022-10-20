@@ -1,7 +1,7 @@
 import logging
 
-from telegram.repository_mongo.models import Channel
-from telegram.repository_mongo.mongo import MongoRepositoryChannel
+from telegram.models.model_channel import Channel
+from telegram.repository_mongo.mongo_channel import MongoRepositoryChannel
 
 _logger = logging.getLogger('custom')
 
@@ -14,17 +14,22 @@ class ChannelService:
 		return result
 
 	@staticmethod
-	async def addArrayDict(array_dicts: []) -> []:
-		result = await MongoRepositoryChannel().upsertArray(array_dicts)
+	async def saveDicts(array_dicts: []) -> []:
+		result = await MongoRepositoryChannel().upsertArrayDicts(array_dicts)
 		return result
 	
 	@staticmethod
 	async def findArray(channel_ids: []) -> []:
-		result = await MongoRepositoryChannel().findByIdOrAll(channel_ids)
+		result = await MongoRepositoryChannel().findDictByIdOrAll(channel_ids)
 		return result
 
-	async def addArrayId(self, channel_ids: []) -> []:
-		result = await MongoRepositoryChannel().upsertArray(await self._convertIdsToChannels(channel_ids))
+	async def saveArrayId(self, channel_ids: []) -> []:
+		result = await MongoRepositoryChannel().upsertArrayDicts(await self._convertIdsToChannels(channel_ids))
+		return result
+
+	@staticmethod
+	async def getChannelByStatus(status) -> []:
+		result = await MongoRepositoryChannel().findChannelByStatus(status)
 		return result
 
 	@staticmethod

@@ -20,7 +20,7 @@ class TelegramApiService:
 		self._account_type = configBase['telegram_account']
 		_logger.debug(f'Configuration {self._account_type} account')
 
-	async def getTelegramClient(self) -> TelegramClient:
+	def getTelegramClient(self) -> TelegramClient:
 		client = TelegramClient(join(TELEGRAM_SESSION, self._session_name), self._api_id, self._api_hash)
 		if self._account_type == 'account_test':
 			dc = configTelegram['telegram']['dc']
@@ -31,7 +31,7 @@ class TelegramApiService:
 		else:
 			return client
 
-	async def getPhoneNumber(self) -> str:
+	def getPhoneNumber(self) -> str:
 		name_phone_file = 'phone_for_debugging.txt'
 		if self._account_type == 'account_test':
 			try:
@@ -50,3 +50,8 @@ class TelegramApiService:
 	def _getDc():
 		dc = configTelegram['telegram']['dc']
 		return dc
+
+
+async def checkConnection(client):
+	x = client.is_connected()
+	_logger.debug(f'Connection status: {x}')
