@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+import logging.config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-(-0&p-5i9#8xd=3_lk9gfx58x1pjg(d*z@y9&+iq1q_e-%9l5&'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -35,11 +36,9 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-	'django_telethon_session',
+	# 'django_telethon_session',
 	'telegram.apps.TelegramConfig',
-	'repository_mongo.apps.RepositoryMongoConfig',
 	'configuration.apps.ConfigurationConfig',
-	'test_data.apps.TestDataConfig',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +119,49 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# https://docs.djangoproject.com/en/4.1/topics/logging/
+
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'formatters': {
+		'verbose': {
+			'format': '{levelname} |{asctime}| {module} | {process:d} {thread:d} | {message}',
+			'style': '{',
+		},
+		'simple': {
+			'format': '{levelname} |{asctime}| {module} | {message}',
+			'style': '{',
+		},
+	},
+	'handlers': {
+		'console': {
+			'class': 'logging.StreamHandler',
+			'formatter': 'simple'
+		},
+		'file': {
+			'level': 'WARNING',
+			'class': 'logging.FileHandler',
+			'filename': 'logs/server.log',
+			'formatter': 'verbose'
+		},
+	},
+	'loggers': {
+		'django': {
+			'handlers': ['file', 'console'],
+			'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+			'propagate': False,
+		},
+		'custom': {
+			'handlers': ['console', 'file'],
+			'level': 'DEBUG',
+			'propagate': False,
+		}
+	},
+	'root': {
+		'handlers': ['console'],
+		'level': 'ERROR',
+		'propagate': False,
+	},
+}
