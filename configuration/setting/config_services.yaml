@@ -8,6 +8,9 @@
         user: app
         password: dafUZT2dbOSp0BbcxADF
         databaseName: parser_telegram
+        collectionMessage: messages
+        collectionChannel: channels
+        collectionTask: tasks
 
       mysql:
         host: 192.168.190.56
@@ -24,6 +27,9 @@
         user: app
         password: pasaword
         databaseName: parser_telegram
+        collectionMessage: messages
+        collectionChannel: channels
+        collectionTask: tasks
 
       mysql:
         host: localhost

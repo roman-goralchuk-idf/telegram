@@ -6,6 +6,8 @@ account_1:
     api_hash: e54c86627e6fed51dd4c548dfc920094
     phone: +375293372269
     session: session_account_1
+    parse_mode: HTML
+    waiting_between_messages_sec: 1
 
 account_2:
   telegram:
@@ -13,6 +15,8 @@ account_2:
     api_hash: 691546d6af65c083cbadb4fa55889382
     phone: +375445900823
     session: session_account_2
+    parse_mode: HTML
+    waiting_between_messages_sec: 1
 
 account_test:
   telegram:
@@ -20,6 +24,8 @@ account_test:
     api_hash: e54c86627e6fed51dd4c548dfc920094
     phone: 9996621234
     session: session_test
+    parse_mode: HTML
+    waiting_between_messages_sec: 1
     host: 149.154.167.40
     port: 443
     dc: 2
