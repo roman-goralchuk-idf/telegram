@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from telegram.service.login_service import LoginService
+from telegram.service.telegram_login_service import LoginService
 
 _logger = logging.getLogger('custom')
 

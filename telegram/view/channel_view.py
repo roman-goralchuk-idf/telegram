@@ -26,7 +26,7 @@ class ChannelHandler(View):
 	async def post(request):
 		request_body = json.loads(request.body)
 		channel_ids: [] = request_body.get('channel_ids')
-		result = await ChannelService().addArrayId(channel_ids)
+		result = await ChannelService().saveArrayId(channel_ids)
 		data = {
 			"result": result
 		}
@@ -35,7 +35,7 @@ class ChannelHandler(View):
 	@staticmethod
 	async def put(request):
 		array_channels = json.loads(request.body)
-		result = await ChannelService().addArrayDict(array_channels)
+		result = await ChannelService().saveDicts(array_channels)
 		data = {
 			"result": result
 		}
