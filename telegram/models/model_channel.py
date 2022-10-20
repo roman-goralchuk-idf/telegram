@@ -11,10 +11,10 @@ class Channel:
 
 	def __init__(self, channel_id):
 		self.channel_id: int = channel_id
-		self.name = None
 		self.status = StatusChannel.NEW.value
-		self.last_update = None
-		self.message_count = None
+		self.message_total_count = None
+		self.last_update_message_date = None
+		self.last_update_message_id: int = 0
 
 	def toDict(self):
 		return self.__dict__
@@ -23,9 +23,3 @@ class Channel:
 		for key in input_dict:
 			setattr(self, key, input_dict[key])
 
-
-class Dict2Class:
-
-	def __init__(self, my_dict):
-		for key in my_dict:
-			setattr(self, key, my_dict[key])
