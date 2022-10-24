@@ -9,7 +9,7 @@ _logger = logging.getLogger('custom')
 
 # redis-cli -h localhost -p 6379 -a pasaword
 # redis://user:secret@localhost:6379/0
-# python - m celery - A celery_django worker
+# python -m celery -A celery_django worker -l info
 
 def _getCelery() -> Celery:
 	_logger.debug('Celery STARTED')
@@ -23,4 +23,4 @@ celery_app.config_from_object('celery_django.apps.CeleryDjangoConfig', namespace
 
 @celery_app.task(bind=True)
 def debug_task(self):
-	print(f'Request: {self.request!r}')
+	_logger.debug(f'Celery request: {self.request!r}')

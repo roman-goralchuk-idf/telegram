@@ -10,7 +10,7 @@ class CeleryDjangoConfig(AppConfig):
 
 	CELERY_BROKER_URL = getRedisConfig()
 	CELERY_result_backend = getRedisConfig()
-	CELERY_TIMEZONE = TimeService().getTimeZone()
+	CELERY_timezone = TimeService().getTimeZone()
 
 
 

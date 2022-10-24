@@ -16,7 +16,7 @@ class TasksStartService:
 	def __init__(self):
 		self._client = TelegramApiService().getTelegramClient()
 
-	async def startDeliveryTask(self, task_ids: [int]):
+	async def startDelivery(self, task_ids: [int]):
 		try:
 			await self._client.connect()
 			await checkConnection(client=self._client)
