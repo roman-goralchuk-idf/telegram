@@ -1,10 +1,9 @@
-import asyncio
 import logging
 
 import pymongo
 
 from configuration.configurationloader import configService
-from telegram.models.model_task import TaskDelivery, TasksRequest, TaskDeliveryStatus
+from telegram.models.model_task import TaskDelivery, TasksSearchRequest
 from telegram.repository_mongo.mongo_base import MongoRepository
 
 _logger = logging.getLogger('custom')
@@ -20,7 +19,7 @@ class MongoRepositoryTask(MongoRepository):
 	async def upsertOneByTaskId(self, task: TaskDelivery):
 		try:
 			if task.task_id is None:
-				task.task_id = await self._getTaskId()
+				task.task_id = await self._generateTaskId()
 			query = {
 				"task_id": task.task_id
 			}
@@ -33,11 +32,25 @@ class MongoRepositoryTask(MongoRepository):
 				"operation_result": result.acknowledged,
 				"update_count": result.modified_count
 			}
+			_logger.debug(operation_response)
 			return operation_response
 		except Exception as e:
 			_logger.error(e)
 
-	async def findTaskByParameters(self, tasks: TasksRequest) -> [TaskDelivery]:
+	async def findTaskById(self, task_id) -> TaskDelivery:
+		try:
+			query = {
+				"task_id": task_id
+			}
+			task_found_dict = self._collection.find_one(query)
+			task: TaskDelivery = TaskDelivery(None, None, None, None)
+			task.fromDict(task_found_dict)
+			_logger.debug(f'Task found: {task.task_id}')
+			return task
+		except Exception as e:
+			_logger.error(e)
+
+	async def findTasksByParameters(self, tasks: TasksSearchRequest) -> [TaskDelivery]:
 		try:
 			query = {}
 			if len(tasks.task_ids) != 0:
@@ -48,9 +61,9 @@ class MongoRepositoryTask(MongoRepository):
 				'_id': 0
 			}
 			_logger.debug(f'For find {query}')
-			result = self._collection.find(query, fields)
+			tasks_dicts: [] = self._collection.find(query, fields)
 			tasks: [TaskDelivery] = []
-			for task_dict in result:
+			for task_dict in tasks_dicts:
 				task: TaskDelivery = TaskDelivery(None, None, None, None)
 				task.fromDict(task_dict)
 				_logger.debug(f'Task found: {task.task_id}')
@@ -59,7 +72,7 @@ class MongoRepositoryTask(MongoRepository):
 		except Exception as e:
 			_logger.error(e)
 
-	async def _getTaskId(self) -> int:
+	async def _generateTaskId(self) -> int:
 		try:
 			result = self._collection.find().sort('task_id', pymongo.DESCENDING).limit(1)
 			next_number: int = 1

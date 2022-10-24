@@ -26,6 +26,22 @@ services:
     ports:
       - "3306:3306"
 
+  redis:
+    image: 'bitnami/redis:latest'
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_PASSWORD=pasaword
+      - REDIS_PORT_NUMBER=6379
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory 100mb
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-conf:/opt/bitnami/redis/mounted-etc/redis.con
+      - redis-persistence:/bitnami/redis/data
+
 volumes:
   mongodb-lib:
   mysql-lib:
+  redis-conf:
+  redis-persistence:

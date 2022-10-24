@@ -19,6 +19,11 @@
         password: dafUZT2dbOSp0BbcxADF
         databaseName: parser_telegram
 
+      redis:
+        host: localhost
+        port: 6379
+        password: pasaword
+
   test:
     database:
       mongo:
@@ -37,3 +42,8 @@
         user: user
         password: pasaword
         databaseName: parser_telegram
+
+      redis: #redis-cli -h localhost -p 6379 -a pasaword
+        host: localhost
+        port: 6379
+        password: pasaword

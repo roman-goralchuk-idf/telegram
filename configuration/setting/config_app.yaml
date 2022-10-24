@@ -2,3 +2,4 @@
 appName: TelegramParser
 environment: test #test #prod
 telegram_account: account_1 #account_2 #account_1 #account_test
+time_zone: Europe/Minsk #Europe/Moscow #Etc/GMT+3 #Etc/GMT+4
