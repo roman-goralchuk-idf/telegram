@@ -5,6 +5,7 @@ from urllib.parse import quote_plus
 
 import pymongo
 from bson import json_util
+from pymongo.results import InsertManyResult
 
 from configuration.configurationloader import configService
 
@@ -43,11 +44,11 @@ class MongoRepository(ABC):
 		except IOError as e:
 			_logger.error(e)
 
-	async def saveAllDicts(self, array_dict):
+	async def saveAllDicts(self, array_dict) -> InsertManyResult:
 		try:
 			result = self._collection.insert_many(array_dict)
 			_logger.debug(f'Inserted: {result.inserted_ids}')
-			return result.acknowledged
+			return result
 		except IOError as e:
 			_logger.error(e)
 

@@ -24,6 +24,16 @@
         port: 6379
         password: pasaword
 
+    rabbitmq:
+      host: db.alpha.idflab
+      portApp: 5672
+      portAdmin: 15672
+      user: guest
+      password: guest
+      queue: telegram-parser.event-bus.queue
+      routingKey: telegram-parse
+      exchange: telegram-parser.event-bus.exchange
+
   test:
     database:
       mongo:
@@ -47,3 +57,13 @@
         host: localhost
         port: 6379
         password: pasaword
+
+    rabbitmq:
+      host: localhost
+      portApp: 5672
+      portAdmin: 15672
+      user: user
+      password: pasaword
+      queue: telegram-parser.event-bus.queue
+      parserMessageRoutingKey: telegram-parse
+      exchange: telegram-parser.event-bus.exchange

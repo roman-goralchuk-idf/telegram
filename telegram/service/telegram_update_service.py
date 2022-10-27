@@ -1,7 +1,8 @@
 import datetime
 import logging
 
-from telegram.models.model_channel import StatusChannel, Channel
+from telegram.models.model_channel import ChannelStatus, Channel
+from telegram.models.model_telegram_message import TelegramMessageUpdateResult
 from telegram.repository_mongo.mongo_message import MongoRepositoryMessages
 from telegram.service.channel_service import ChannelService
 from telegram.service.telegram_client_service import TelegramApiService
@@ -21,7 +22,7 @@ class TelegramUpdateService:
 		try:
 			await self._client.connect()
 			array_response = []
-			array_channel = await ChannelService().getChannelByStatus(StatusChannel.IN_WORK.value)
+			array_channel = await ChannelService().getChannelByStatus(ChannelStatus.IN_WORK.value)
 
 			for channel in array_channel:
 				_logger.debug(
@@ -43,15 +44,15 @@ class TelegramUpdateService:
 
 	async def _sendMessagesInDB(self, channel: Channel, last_mess_id_in_channel, all_new_messages) -> {}:
 		messages_dict_to_save = await self._prepareMessagesForSave(all_new_messages)
-		result = 'not updated'
+		result = None
 		if len(messages_dict_to_save) is not self._empty_list:
 			result = await MongoRepositoryMessages().saveAllDicts(messages_dict_to_save)
-		return {
-				"channel_id": channel.channel_id,
-				"new_messages": len(messages_dict_to_save),
-				"update_result": result,
-				"last_id": last_mess_id_in_channel
-			}
+		return TelegramMessageUpdateResult(
+			channel_id=channel.channel_id,
+			count_messages=len(result.inserted_ids),
+			update_result=result.acknowledged,
+			last_id=last_mess_id_in_channel
+		)
 
 	@staticmethod
 	async def _prepareMessagesForSave(all_new_messages) -> []:

@@ -3,7 +3,7 @@ import logging
 import pymongo
 
 from configuration.configurationloader import configService
-from telegram.models.model_task import TaskDelivery, TasksSearchRequest
+from telegram.models.model_app_task import TaskDelivery, TasksSearchRequest
 from telegram.repository_mongo.mongo_base import MongoRepository
 
 _logger = logging.getLogger('custom')

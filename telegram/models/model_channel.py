@@ -1,7 +1,7 @@
 import enum
 
 
-class StatusChannel(enum.Enum):
+class ChannelStatus(enum.Enum):
 	NEW = 'new'
 	IN_WORK = 'in_work'
 	DISABLE = 'disable'
@@ -11,7 +11,7 @@ class Channel:
 
 	def __init__(self, channel_id):
 		self.channel_id: int = channel_id
-		self.status = StatusChannel.NEW.value
+		self.status = ChannelStatus.NEW.value
 		self.message_total_count = None
 		self.last_update_message_date = None
 		self.last_update_message_id: int = 0

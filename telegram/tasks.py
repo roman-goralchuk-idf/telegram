@@ -6,6 +6,5 @@ from telegram.service.telegram_tasks_start import TasksStartService
 
 
 @shared_task()
-async def startDeliveryTask(task_ids: [int]):
-	await sleep(20)
+async def celeryStartDeliveryTask(task_ids: [int]):
 	await TasksStartService().startDelivery(task_ids)

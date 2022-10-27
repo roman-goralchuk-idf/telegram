@@ -6,9 +6,9 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from telegram.models.model_task import TasksSearchRequest, TaskDelivery
+from telegram.models.model_app_task import TasksSearchRequest, TaskDelivery
 from telegram.service.task_service import TaskService
-from telegram.tasks import startDeliveryTask
+from telegram.tasks import celeryStartDeliveryTask
 
 _logger = logging.getLogger('custom')
 
@@ -44,7 +44,7 @@ class TaskStartHandler(View):
 	async def post(request):
 		request_body = json.loads(request.body)
 		ids: [int] = request_body.get('ids_to_start')
-		await startDeliveryTask(ids)
+		await celeryStartDeliveryTask(ids)
 		response = {
 			"start_tasks": "Tasks started",
 		}

@@ -3,7 +3,7 @@ import logging
 
 from celery import shared_task
 
-from telegram.models.model_task import TasksSearchRequest, TaskDeliveryStatus, TaskDelivery
+from telegram.models.model_app_task import TasksSearchRequest, TaskDeliveryStatus, TaskDelivery
 from telegram.repository_mongo.mongo_task import MongoRepositoryTask
 from telegram.service.telegram_client_service import TelegramApiService, checkConnection
 from telegram.service.telegram_conversation_service import ConversationService

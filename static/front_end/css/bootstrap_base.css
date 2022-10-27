@@ -1,0 +1,12 @@
+.bg-primary {
+    background-color: rgba(40, 100, 127, 1.0)!important;
+}
+
+button.btn-primary {
+    background-color: rgba(40, 100, 127, 1.0)!important;
+    border-color: rgba(40, 100, 127, 1.0)!important;
+}
+
+div.text-center.p-3 {
+    background-color: rgba(0, 0, 0, 0.2)!important;
+}

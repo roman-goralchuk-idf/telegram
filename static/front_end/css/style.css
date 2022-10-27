@@ -1,0 +1,19 @@
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: #fff;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.bg-top-custom {
+    background-color: rgba(58, 188, 220, 1.0);
+}
+
+.center-content {
+    margin: auto;
+}

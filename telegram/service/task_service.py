@@ -1,6 +1,6 @@
 import logging
 
-from telegram.models.model_task import TaskDelivery, TasksSearchRequest
+from telegram.models.model_app_task import TaskDelivery, TasksSearchRequest
 from telegram.repository_mongo.mongo_task import MongoRepositoryTask
 
 _logger = logging.getLogger('custom')

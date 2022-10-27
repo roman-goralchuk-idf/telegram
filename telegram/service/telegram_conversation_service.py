@@ -6,7 +6,7 @@ from telethon.errors import FloodError
 
 from configuration.configurationloader import configTelegram
 from telegram.models.model_send_message import SendMessage
-from telegram.models.model_task import TaskDelivery, TaskDeliveryStatus
+from telegram.models.model_app_task import TaskDelivery, TaskDeliveryStatus
 
 _logger = logging.getLogger('custom')
 

@@ -18,13 +18,6 @@ def _loader(filename):
 		_logger.error(e)
 
 
-def getRedisConfig() -> str:
-	password = configService['database']['redis']['password']
-	host = configService['database']['redis']['host']
-	port = configService['database']['redis']['port']
-	return f'redis://:{password}@{host}:{port}'
-
-
 configBase = _loader('config_app.yaml')
 configService = _loader('config_services.yaml')[configBase['environment']]
 configResponse = _loader('config_response.yaml')
