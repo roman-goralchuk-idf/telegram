@@ -40,8 +40,28 @@ services:
       - redis-conf:/opt/bitnami/redis/mounted-etc/redis.con
       - redis-persistence:/bitnami/redis/data
 
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: pasaword
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-log:/var/log/rabbitmq
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+
 volumes:
   mongodb-lib:
   mysql-lib:
   redis-conf:
   redis-persistence:
+  rabbitmq-data:
+  rabbitmq-log:
