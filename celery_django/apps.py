@@ -1,3 +1,5 @@
+import os
+
 from django.apps import AppConfig
 
 from configuration.configurationloader import configService
@@ -18,9 +20,5 @@ class CeleryDjangoConfig(AppConfig):
 	CELERY_BROKER_URL = _getRedisConfig()
 	CELERY_result_backend = _getRedisConfig()
 	CELERY_timezone = TimeService().getTimeZone()
-
-
-
-
-
-
+	CELERY_task_track_started = True
+	CELERY_task_time_limit = 30 * 60
