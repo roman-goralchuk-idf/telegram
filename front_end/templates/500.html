@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load bootstrap5 %}
+
+{% block pagename %}{{ pagename }}{% endblock pagename %}
+
 {% block content %}
+
 <div class="container center-content">
     <div class="p-4 text-dark text-center">
-        <h2>Server problem!</h2>
+        <h3>{{ message }}</h3>
     </div>
 </div>
+
 {% endblock %}
