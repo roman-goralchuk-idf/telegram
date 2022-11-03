@@ -31,19 +31,21 @@ class EventParserMessageService(EventService):
 
 	def __init__(self):
 		super().__init__()
-		self._routing_key = configService['rabbitmq']['parserMessageRoutingKey']
 
 	async def emit(self, event: EventParserMessage):
+		routing_key = configService['rabbitmq']['routingKey']
+		_logger.debug(f'Routing key: {routing_key}')
 		eventToSend = event.prepareToSend()
+		_logger.debug(f'Event for send: {eventToSend}')
 		connection = pika.BlockingConnection(pika.URLParameters(self._getRabbitMqConfig()))
 		channel = connection.channel()
 		channel.exchange_declare(exchange=self._exchange, exchange_type='direct')
 		channel.queue_declare(queue=self._queue, exclusive=False)
-		channel.queue_bind(exchange=self._exchange, queue=self._queue, routing_key=self._routing_key)
+		channel.queue_bind(exchange=self._exchange, queue=self._queue, routing_key=routing_key)
 		channel.basic_publish(
 			exchange=self._exchange,
-			routing_key=self._routing_key,
+			routing_key=routing_key,
 			body=eventToSend
 		)
-		_logger.debug(f'Message sent: {eventToSend}')
+		_logger.debug(f'Message published: OK')
 		connection.close()

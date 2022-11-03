@@ -42,11 +42,15 @@ class MongoRepositoryTask(MongoRepository):
 			query = {
 				"task_id": task_id
 			}
-			task_found_dict = self._collection.find_one(query)
-			task: TaskDelivery = TaskDelivery(None, None, None, None)
-			task.fromDict(task_found_dict)
-			_logger.debug(f'Task found: {task.task_id}')
-			return task
+			fields = {
+				'_id': 0
+			}
+			task_found_dict = self._collection.find_one(query, fields)
+			_logger.debug(f'Result: {task_found_dict}')
+			if task_found_dict is not None:
+				task: TaskDelivery = TaskDelivery()
+				task.fromDict(task_found_dict)
+				return task
 		except Exception as e:
 			_logger.error(e)
 
@@ -64,7 +68,7 @@ class MongoRepositoryTask(MongoRepository):
 			tasks_dicts: [] = self._collection.find(query, fields)
 			tasks: [TaskDelivery] = []
 			for task_dict in tasks_dicts:
-				task: TaskDelivery = TaskDelivery(None, None, None, None)
+				task: TaskDelivery = TaskDelivery()
 				task.fromDict(task_dict)
 				_logger.debug(f'Task found: {task.task_id}')
 				tasks.append(task)

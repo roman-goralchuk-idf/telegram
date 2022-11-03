@@ -33,9 +33,7 @@ SECRET_KEY = 'django-insecure-(-0&p-5i9#8xd=3_lk9gfx58x1pjg(d*z@y9&+iq1q_e-%9l5&
 # # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-	'*'
-]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -117,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Minsk'
 
 USE_I18N = True
 
@@ -132,7 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {
 	'version': 1,
-	'disable_existing_loggers': False,
+	'disable_existing_loggers': True,
 	'formatters': {
 		'verbose': {
 			'format': '{levelname} |{asctime}| {module} | {process:d} {thread:d} | {message}',
@@ -146,13 +144,25 @@ LOGGING = {
 	'handlers': {
 		'console': {
 			'class': 'logging.StreamHandler',
-			'formatter': 'simple'
+			'formatter': 'simple',
 		},
 		'file': {
 			'level': 'WARNING',
-			'class': 'logging.FileHandler',
+			'class': 'logging.handlers.TimedRotatingFileHandler',
 			'filename': 'logs/server.log',
-			'formatter': 'verbose'
+			'when': 'D',  # this specifies the interval
+			'interval': 1,  # defaults to 1, only necessary for other values
+			'backupCount': 10,  # how many backup file to keep, 10 days
+			'formatter': 'verbose',
+		},
+		'celery_file': {
+			'level': 'WARNING',
+			'class': 'logging.handlers.TimedRotatingFileHandler',
+			'filename': 'logs/celery.log',
+			'when': 'D',
+			'interval': 1,
+			'backupCount': 10,
+			'formatter': 'verbose',
 		},
 	},
 	'loggers': {
@@ -162,14 +172,19 @@ LOGGING = {
 			'propagate': False,
 		},
 		'custom': {
-			'handlers': ['console', 'file'],
+			'handlers': ['console', 'file', 'celery_file'],
 			'level': 'DEBUG',
 			'propagate': False,
-		}
+		},
+		'celery': {
+			'handlers': ['celery_file', 'console'],
+			'level': 'DEBUG',
+			'propagate': False,
+		},
 	},
 	'root': {
 		'handlers': ['console'],
 		'level': 'ERROR',
 		'propagate': False,
-	},
+	}
 }

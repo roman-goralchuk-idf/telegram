@@ -46,8 +46,8 @@ class MongoRepository(ABC):
 
 	async def saveAllDicts(self, array_dict) -> InsertManyResult:
 		try:
-			result = self._collection.insert_many(array_dict)
-			_logger.debug(f'Inserted: {result.inserted_ids}')
+			result: InsertManyResult = self._collection.insert_many(array_dict)
+			# _logger.debug(f'Inserted: {result.inserted_ids}')
 			return result
 		except IOError as e:
 			_logger.error(e)

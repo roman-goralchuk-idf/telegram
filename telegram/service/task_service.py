@@ -13,7 +13,12 @@ class TaskService:
 		return await MongoRepositoryTask().upsertOneByTaskId(task)
 
 	@staticmethod
-	async def findTasks(tasks_req: TasksSearchRequest) -> []:
-		result = await MongoRepositoryTask().findTasksByParameters(tasks_req)
-		return [task.toDict() for task in result]
+	async def findTasks(tasks_req: TasksSearchRequest) -> [TaskDelivery]:
+		result: [TaskDelivery] = await MongoRepositoryTask().findTasksByParameters(tasks_req)
+		return result
+
+	@staticmethod
+	async def findTasksById(task_id) -> TaskDelivery:
+		result: TaskDelivery = await MongoRepositoryTask().findTaskById(task_id)
+		return result
 

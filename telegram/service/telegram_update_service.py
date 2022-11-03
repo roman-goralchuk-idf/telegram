@@ -1,10 +1,14 @@
 import datetime
 import logging
 
+from pymongo.results import InsertManyResult
+
 from telegram.models.model_channel import ChannelStatus, Channel
-from telegram.models.model_telegram_message import TelegramMessageUpdateResult
+from telegram.models.model_customer import CustomerStatus
+from telegram.models.model_event import EventParserMessage
 from telegram.repository_mongo.mongo_message import MongoRepositoryMessages
 from telegram.service.channel_service import ChannelService
+from telegram.service.event_service import EventParserMessageService
 from telegram.service.telegram_client_service import TelegramApiService
 
 _logger = logging.getLogger('custom')
@@ -21,7 +25,7 @@ class TelegramUpdateService:
 	async def updateMessages(self) -> []:
 		try:
 			await self._client.connect()
-			array_response = []
+			array_send_message_result = []
 			array_channel = await ChannelService().getChannelByStatus(ChannelStatus.IN_WORK.value)
 
 			for channel in array_channel:
@@ -34,25 +38,23 @@ class TelegramUpdateService:
 					min_id=int(channel.last_update_message_id),
 					max_id=last_mess_id_in_telegram
 				)
-				result = await self._sendMessagesInDB(channel, last_mess_id_in_telegram, all_new_messages)
-				array_response.append(result)
+				mongo_ids: [str] = await self._sendMessagesInDB(all_new_messages)
+
+				event = EventParserMessage(ids_messages=mongo_ids, customer_status=CustomerStatus.NEW.value)
+
+				await EventParserMessageService().emit(event)
+				array_send_message_result.append(mongo_ids)
 				await self._updateChannelInfoInDB(last_mess_id_in_telegram, channel, all_new_messages)
 
-			return array_response
+			return array_send_message_result
 		finally:
 			await self._client.disconnect()
 
-	async def _sendMessagesInDB(self, channel: Channel, last_mess_id_in_channel, all_new_messages) -> {}:
+	async def _sendMessagesInDB(self, all_new_messages) -> [str]:
 		messages_dict_to_save = await self._prepareMessagesForSave(all_new_messages)
-		result = None
 		if len(messages_dict_to_save) is not self._empty_list:
-			result = await MongoRepositoryMessages().saveAllDicts(messages_dict_to_save)
-		return TelegramMessageUpdateResult(
-			channel_id=channel.channel_id,
-			count_messages=len(result.inserted_ids),
-			update_result=result.acknowledged,
-			last_id=last_mess_id_in_channel
-		)
+			result: InsertManyResult = await MongoRepositoryMessages().saveAllDicts(messages_dict_to_save)
+			return [str(mongo_id) for mongo_id in result.inserted_ids]
 
 	@staticmethod
 	async def _prepareMessagesForSave(all_new_messages) -> []:
