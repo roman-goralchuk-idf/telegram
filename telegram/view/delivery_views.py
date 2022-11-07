@@ -1,22 +1,26 @@
 import json
 import logging
 
+from celery.result import AsyncResult
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
+from celery_django import celery_app
+from celery_django.celeryapp import get_celery_life
 from telegram.models.model_app_task import TasksSearchRequest, TaskDelivery
 from telegram.models.model_error_response import ErrorResponse
 from telegram.service.task_service import TaskService
 from telegram.service.time_service import DateTimeEncoder
-from telegram.tasks import celeryStartDeliveryTask
+from telegram.tasks import celeryStartDeliveryTask, celeryTelegramUpdateMessagesTask
 
 _logger = logging.getLogger('custom')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class TasksDeliveryHandler(View):
+class DeliveryHandler(View):
 	@staticmethod
 	async def get(request):
 		request_body = json.loads(request.body)
@@ -29,7 +33,7 @@ class TasksDeliveryHandler(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class TaskByIdDeliveryHandler(View):
+class DeliveryByIdHandler(View):
 
 	@staticmethod
 	async def get(request, task_id):
@@ -56,13 +60,20 @@ class TaskByIdDeliveryHandler(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class TaskStartHandler(View):
+class DeliveryStartHandler(View):
 	@staticmethod
-	async def post(request):
-		request_body = json.loads(request.body)
-		ids: [int] = request_body.get('ids_to_start')
-		await celeryStartDeliveryTask(ids)
-		response = {
-			"start_tasks": "Tasks started"
+	def post(request):
+
+		result = celeryStartDeliveryTask.delay()
+		_logger.debug(f'Result: {result}')
+		id_task = result.task_id
+		celery_task = AsyncResult(id_task)
+		result_status = celery_task.state
+		_logger.debug(result_status)
+		data = {
+			"response": "Delivery messages started",
+			"task_process": get_celery_life()
 		}
-		return JsonResponse(response)
+		return HttpResponse(json.dumps(data), content_type='application/json')
+
+

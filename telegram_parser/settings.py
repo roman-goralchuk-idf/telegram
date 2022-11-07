@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 	'celery_django.apps.CeleryDjangoConfig',
 	'front_end.apps.FrontEndConfig',
 	'bootstrap5',
-	'django_bootstrap_icons'
+	'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [

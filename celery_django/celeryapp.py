@@ -4,7 +4,6 @@ from celery import Celery
 from celery.signals import setup_logging
 from django.conf import settings  # noqa
 
-
 _logger = logging.getLogger('custom')
 
 
@@ -25,36 +24,6 @@ celery_app.config_from_object('celery_django.apps.CeleryDjangoConfig', namespace
 
 @setup_logging.connect
 def config_loggers(*args, **kwargs):
-	# LOGGING = {
-	# 	'version': 1,
-	# 	'disable_existing_loggers': True,
-	# 	'formatters': {
-	# 		'simple': {
-	# 			'format': '%(levelname)s %(message)s',
-	# 			'datefmt': '%y %b %d, %H:%M:%S',
-	# 		},
-	# 	},
-	# 	'handlers': {
-	# 		'console': {
-	# 			'level': 'DEBUG',
-	# 			'class': 'logging.StreamHandler',
-	# 			'formatter': 'simple'
-	# 		},
-	# 		'celery': {
-	# 			'level': 'DEBUG',
-	# 			'class': 'logging.handlers.RotatingFileHandler',
-	# 			'filename': 'celery.log',
-	# 			'formatter': 'simple',
-	# 			'maxBytes': 1024 * 1024 * 100,  # 100 mb
-	# 		},
-	# 	},
-	# 	'loggers': {
-	# 		'celery': {
-	# 			'handlers': ['celery', 'console'],
-	# 			'level': 'DEBUG',
-	# 		},
-	# 	}
-	# }
 	from logging.config import dictConfig
 	from telegram_parser.settings import LOGGING
 	dictConfig(LOGGING)
@@ -66,3 +35,29 @@ celery_app.autodiscover_tasks(packages=['telegram'])
 @celery_app.task(bind=True)
 def debug_task(self):
 	_logger.debug(f'Celery request: {self.request!r}')
+
+
+def get_celery_worker_status():
+	i = celery_app.control.inspect()
+	availability = i.ping()
+	stats = i.stats()
+	registered_tasks = i.registered()
+	active_tasks = i.active()
+	scheduled_tasks = i.scheduled()
+	result = {
+		'availability': availability,
+		'stats': stats,
+		'registered_tasks': registered_tasks,
+		'active_tasks': active_tasks,
+		'scheduled_tasks': scheduled_tasks
+	}
+	return result
+
+
+def get_celery_life():
+	i = celery_app.control.inspect()
+	availability = i.ping()
+	if availability is not None:
+		return 'Task server started. The current task has been sent to the server for execution.'
+	else:
+		return 'Task server is not running. The current task has been queued and is waiting for the server to start.'

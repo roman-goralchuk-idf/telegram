@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
+    {% load template_tag %}
     <link type="image/x-icon" href="{% static 'front_end/favicon.png' %}" rel="shortcut icon">
+    {% block script %}
+    {% endblock script %}
     {% load bootstrap5 %}
     {% load bootstrap_icons %}
     {% bootstrap_css %}
@@ -13,14 +16,15 @@
     {% bootstrap_messages %}
     <link rel="stylesheet" type="text/css" href="{% static 'front_end/css/bootstrap_base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'front_end/css/style.css' %}">
-    <title>Telegram Parser</title>
+    <title>Telegram Service - the best service for working with Telegram</title>
 </head>
-
 <body>
 <!-- Header -->
+{% block header %}
     <header>
        <div class="p-4 bg-top-custom text-white text-center">
-            <h1>Telegram Service</h1>
+           {% app_name as name %}
+            <h1>{{ name }}</h1>
             <p>ID-Finance makes me happy!</p>
         </div>
         <!-- Navigation-->
@@ -38,31 +42,39 @@
                 <a class="nav-link" href="/messages">Messages</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/tasks">Tasks</a>
+                <a class="nav-link" href="/channels">Channels</a>
               </li>
-                <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link" href="/clients">Clients</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/tasks">Delivery</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
               </li>
             </ul>
           </div>
         </nav>
-        <!-- Navigation-->
+        <!-- /Navigation-->
+        <div class="page-name container mt-5">
+            <div class="text-dark">
+                <h2>
+                    {% block pagename %}
+                    {% endblock pagename %}
+                </h2>
+                <hr class="bg-light border-2 border-top border-dark">
+            </div>
+        </div>
     </header>
-<!-- Header -->
-
-{% block content %}
-{% endblock %}
-
+{% endblock header %}
+<!-- /Header -->
+<div class="container mt-2">
+    {% block content %}
+    {% endblock content %}
+</div>
 <!-- Footer -->
 <footer class="bg-primary text-center text-white">
-<!--  <div class="container p-4">-->
-<!--    <section class="mb-4">-->
-<!--      <p>-->
-<!--        -->
-<!--      </p>-->
-<!--    </section>-->
-<!--  </div>-->
-
   <div class="text-center p-3">
     © 2022 Copyright:
     <a class="text-white" href="https://idfinance.com/es/" target="_blank">idfinance.com</a>

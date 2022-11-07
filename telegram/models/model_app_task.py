@@ -11,6 +11,8 @@ class TaskDeliveryStatus(enum.Enum):
 
 	DRAFT = 'draft'
 	READY_FOR_DELIVERY = 'ready_for_delivery'
+	PENDING = 'pending'
+	IN_PROGRESS = 'in_progress'
 	COMPLETED = 'completed'
 	PARTLY_COMPLETED = 'partly_completed'
 	ERROR = 'error'
@@ -33,7 +35,7 @@ class TaskDelivery:
 		self.telegram_ids: [str] = telegram_ids
 		self.message: str = message
 		self.description: str = description
-		self._created_date: datetime = created_date
+		self.created_date: datetime = created_date
 		self.delivery_scheduled: datetime = delivery_scheduled
 		self.performed_date: datetime = performed_date
 
@@ -46,9 +48,9 @@ class TaskDelivery:
 
 
 class TasksSearchRequest:
-	def __init__(self, tasks_ids, status):
+	def __init__(self, tasks_ids=None, status=TaskDeliveryStatus.DRAFT.name_status):
 		self.task_ids: [int] = tasks_ids
-		self.status = status
+		self.status: str = status
 
 	def toDict(self):
 		return self.__dict__

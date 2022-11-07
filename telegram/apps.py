@@ -10,5 +10,5 @@ class TelegramConfig(AppConfig):
     name = 'telegram'
 
 
-TEST_DATA_FULL = join(BASE_DIR, 'telegram/test_data/full')
+TEST_DATA_FULL = join(BASE_DIR, 'test_data/full')
 TELEGRAM_SESSION = join(BASE_DIR, 'telegram/telegram_session')

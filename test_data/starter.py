@@ -21,6 +21,6 @@ async def sprint():
     ]
     for channel in list_channel:
         result = await MongoRepositoryMessages().saveAllDicts(await TestData.getFullData(channel))
-        print(f'{channel} - {result}')
+        print(f'{channel} - {len(result.inserted_ids)}')
 
 asyncio.run(sprint())

@@ -19,7 +19,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('telegram-api/', include('telegram.urls', namespace='telegram-api')),
-    path('', include('front_end.urls')),
+    path('celery-api/', include('celery_django.urls', namespace='celery-api')),
+    path('', include('front_end.urls', namespace='front')),
 ]
 
 handler404 = 'front_end.views.error_404_page_not_found_view'

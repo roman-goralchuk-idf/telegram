@@ -65,5 +65,5 @@
       user: user
       password: pasaword
       queue: telegram-parser.event-bus.queue
-      parserMessageRoutingKey: telegram-parse
+      routingKey: telegram-parse
       exchange: telegram-parser.event-bus.exchange
