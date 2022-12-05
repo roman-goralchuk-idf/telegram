@@ -33,6 +33,7 @@
       queue: telegram-parser.event-bus.queue
       routingKey: telegram-parse
       exchange: telegram-parser.event-bus.exchange
+      batchSize: 100
 
   test:
     database:
@@ -67,3 +68,4 @@
       queue: telegram-parser.event-bus.queue
       routingKey: telegram-parse
       exchange: telegram-parser.event-bus.exchange
+      batchSize: 100

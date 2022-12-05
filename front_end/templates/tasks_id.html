@@ -3,59 +3,27 @@
 {% load template_tag %}
 
 {% block script %}
-<script src="{% static 'front_end/js/test.js' %}"></script>
+<script src="{% static 'js/taskId.js' %}"></script>
+<script>
+    findTaskById('{% url 'telegram-api:tasks' %}', {{ statuses|safe }})
+</script>
+
 {% endblock script %}
 
 {% block pagename %}{{ pagename }}{% endblock pagename %}
 
 {% block content %}
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">fields</th>
-            <th scope="col">data</th>
+            <th scope="col">field</th>
+            <th scope="col">value</th>
         </tr>
     </thead>
-    <tbody class="table-light">
-        <tr>
-            <td>task_id</td>
-            <td>{{ task.task_id }}</td>
-        </tr>
-        <tr>
-            <td>status</td>
-            <td>{{ task.status }}</td>
-        </tr>
-        <tr>
-            <td>created_date</td>
-            {% date_converter task.created_date as created_date %}
-            <td>{{ created_date|date:"Y-m-d h:i:s T" }}</td>
-        </tr>
-        <tr>
-            <td>performed_date</td>
-            {% date_converter task.performed_date as performed_date %}
-            <td>{{ performed_date|date:"Y-m-d h:i:s T" }}</td>
-        </tr>
-        <tr>
-            <td>delivery_scheduled</td>
-            {% date_converter task.delivery_scheduled as delivery_scheduled %}
-            <td>{{ delivery_scheduled|date:"Y-m-d h:i:s T" }}</td>
-        </tr>
-        <tr>
-            <td>description</td>
-            <td>{{ task.description }}</td>
-        </tr>
-        <tr>
-            <td>message</td>
-            <td>{{ task.message }}</td>
-        </tr>
-        <tr>
-            <td>telegram_ids</td>
-            <td>
-                {% for id in task.telegram_ids %}
-                {{ id }},
-                {% endfor %}
-            </td>
-        </tr>
-    </tbody>
+    <tbody id="taskIdBody" class="table-light"></tbody>
 </table>
+
+<form id="taskIdForm" class="text-dark"></form>
+
 {% endblock %}

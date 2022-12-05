@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     {% load template_tag %}
-    <link type="image/x-icon" href="{% static 'front_end/favicon.png' %}" rel="shortcut icon">
+    <link type="image/x-icon" href="{% static 'favicon.png' %}" rel="shortcut icon">
     {% block script %}
     {% endblock script %}
     {% load bootstrap5 %}
@@ -14,8 +14,8 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% bootstrap_messages %}
-    <link rel="stylesheet" type="text/css" href="{% static 'front_end/css/bootstrap_base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'front_end/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap_base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Telegram Service - the best service for working with Telegram</title>
 </head>
 <body>
@@ -31,7 +31,7 @@
        <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
           <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="{% static 'front_end/favicon.png' %}">
+                <img src="{% static 'favicon.png' %}">
             </a>
             <!-- Links -->
             <ul class="navbar-nav">

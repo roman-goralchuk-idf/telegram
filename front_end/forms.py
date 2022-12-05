@@ -1,6 +1,6 @@
 from django import forms
 
-from telegram.models.model_app_task import TaskDeliveryStatus
+from telegram.models.model_task_delivery import TaskDeliveryStatus
 
 
 class TaskForm(forms.Form):

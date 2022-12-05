@@ -1,5 +1,3 @@
-import os
-
 from django.apps import AppConfig
 
 from configuration.configurationloader import configService
@@ -22,3 +20,6 @@ class CeleryDjangoConfig(AppConfig):
 	CELERY_TIMEZONE = TimeService().getTimeZone()
 	CELERY_TASK_TRACK_STARTED = True
 	CELERY_TASK_TIME_LIMIT = 30 * 60
+	CELERY_task_serializer = 'json'
+	CELERY_result_serializer = 'json'
+	CELERY_accept_content = ['json']

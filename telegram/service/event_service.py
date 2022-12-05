@@ -2,6 +2,8 @@ import logging
 from abc import ABC
 
 import pika
+from pika import BasicProperties
+from pika.spec import Basic
 
 from configuration.configurationloader import configService
 from telegram.models.model_event import EventParserMessage
@@ -39,13 +41,14 @@ class EventParserMessageService(EventService):
 		_logger.debug(f'Event for send: {eventToSend}')
 		connection = pika.BlockingConnection(pika.URLParameters(self._getRabbitMqConfig()))
 		channel = connection.channel()
-		channel.exchange_declare(exchange=self._exchange, exchange_type='direct')
-		channel.queue_declare(queue=self._queue, exclusive=False)
+		channel.exchange_declare(exchange=self._exchange, exchange_type='direct', durable=True)
+		channel.queue_declare(queue=self._queue, exclusive=False, durable=True)
 		channel.queue_bind(exchange=self._exchange, queue=self._queue, routing_key=routing_key)
 		channel.basic_publish(
 			exchange=self._exchange,
 			routing_key=routing_key,
-			body=eventToSend
+			body=eventToSend,
+			properties=BasicProperties(type=routing_key)
 		)
 		_logger.debug(f'Message published: OK')
 		connection.close()

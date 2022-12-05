@@ -3,7 +3,7 @@ import logging
 import pymongo
 
 from configuration.configurationloader import configService
-from telegram.models.model_app_task import TaskDelivery, TasksSearchRequest
+from telegram.models.model_task_delivery import TaskDelivery, TasksSearchRequest
 from telegram.repository_mongo.mongo_base import MongoRepository
 
 _logger = logging.getLogger('custom')
@@ -57,7 +57,7 @@ class MongoRepositoryTask(MongoRepository):
 	async def findTasksByParameters(self, tasks: TasksSearchRequest) -> [TaskDelivery]:
 		try:
 			query = {}
-			if len(tasks.task_ids) != 0:
+			if tasks.task_ids is not None and len(tasks.task_ids) != 0:
 				query['task_id'] = {'$in': tasks.task_ids}
 			if tasks.status is not None:
 				query['status'] = tasks.status

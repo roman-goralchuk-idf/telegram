@@ -38,12 +38,12 @@ def debug_task(self):
 
 
 def get_celery_worker_status():
-	i = celery_app.control.inspect()
-	availability = i.ping()
-	stats = i.stats()
-	registered_tasks = i.registered()
-	active_tasks = i.active()
-	scheduled_tasks = i.scheduled()
+	inspect = celery_app.control.inspect()
+	availability = inspect.ping()
+	stats = inspect.stats()
+	registered_tasks = inspect.registered()
+	active_tasks = inspect.active()
+	scheduled_tasks = inspect.scheduled()
 	result = {
 		'availability': availability,
 		'stats': stats,
@@ -55,8 +55,8 @@ def get_celery_worker_status():
 
 
 def get_celery_life():
-	i = celery_app.control.inspect()
-	availability = i.ping()
+	inspect = celery_app.control.inspect()
+	availability = inspect.ping()
 	if availability is not None:
 		return 'Task server started. The current task has been sent to the server for execution.'
 	else:

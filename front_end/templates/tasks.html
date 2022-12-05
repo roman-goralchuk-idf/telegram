@@ -3,7 +3,17 @@
 {% load template_tag %}
 
 {% block script %}
-<script src="{% static 'front_end/js/tasks.js' %}"></script>
+{% load static %}
+<script src="{% static 'js/tasks.js' %}"></script>
+<script src="{% static 'js/tasksTable.js' %}"></script>
+<script>
+    window.onload = (event) => {
+      createTable(
+        '{% url 'telegram-api:tasks' %}',
+        '{% url 'front:tasks' %}',
+        )
+    }
+</script>
 {% endblock script %}
 
 {% block pagename %}{{ pagename }}{% endblock pagename %}
@@ -11,56 +21,113 @@
 {% block content %}
 <section class="text-dark p-3">
   <div class="row p-3">
-      <div class="col p-3">
-          <h4>Description</h4>
-          <p>{{ description }}</p>
-          <p>{{ message_for_delivery }}</p>
-      </div>
-      <div class="col p-3">
-        <div id="task_button">
-            <input
-              class="btn btn-primary btn-lg float-end"
-              onclick="startDelivery('{% url 'telegram-api:tasks_start' %}')"
-              type="submit"
-              value="START DELIVERY TASKS" >
-        </div>
-        <div id="task_response" class="p-5 bg-primary text-white rounded" style="display: none"></div>
-     </div>
+    <h4>Description</h4>
+    <p>{{ description }}</p>
   </div>
-  <hr class="bg-light border-2 border-top border-dark">
-  <div class="row p-3">
-        <h4>Tasks list</h4>
-        <p></p>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">task_id</th>
-                    <th scope="col">status</th>
-                    <th scope="col">created_date</th>
-                    <th scope="col">performed_date</th>
-                    <th scope="col">description</th>
-                    <th scope="col">link</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for task in tasks %}
-                <tr class="table-light">
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ task.task_id }}</td>
-                    <td>{{ task.status }}</td>
-                    {% date_converter task.created_date as created_date %}
-                    <td>{{ created_date|date:"Y-m-d h:i:s T" }}</td>
-                    {% date_converter task.performed_date as performed_date %}
-                    <td>{{ performed_date|date:"Y-m-d h:i:s T" }}</td>
-                    <td>{{ task.description }}</td>
-                    <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'front:tasks' %}{{ task.task_id }}">See task</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+  <div class="row p-3 row-cols-2">
+    {% comment %} First action with button {% endcomment %}
+    <div id="task_start_description" class="row row-cols-2">
+      <div class="col-md-8">
+        <p>{{ message_for_delivery }}</p>
+      </div>
+      <div class="col-md-4">
+        <div id="task_button">
+          <input
+            class="btn btn-primary btn-lg float-end"
+            onclick="startDelivery('{% url 'telegram-api:tasks_start' %}')"
+            type="submit"
+            value="START">
+        </div>
+      </div>
     </div>
+    <div id="task_start_response" class="p-5 bg-light rounded" style="display: none"></div>
+    {% comment %} /end 1st {% endcomment %}
+    {% comment %} Second action with button {% endcomment %}
+    <div class="row row-cols-2">
+      <div class="col-md-8">
+        <p>{{ message_for_new_task }}</p>
+      </div>
+      <div class="col-md-4">
+        <div id="task_new_button">
+          <input
+            class="btn btn-primary btn-lg float-end"
+            onclick="startDelivery('{% url 'telegram-api:tasks_start' %}')"
+            type="submit"
+            value="CREATE" >
+        </div>
+        <div id="task_new" class="p-5 bg-primary text-white rounded" style="display: none"></div>
+      </div>
+    </div>
+    {% comment %} /end 2nd {% endcomment %}
+  </div>
+</section>
+<section class="text-dark p-3">
+ 
+  <hr class="bg-light border-2 border-top border-dark">
+  <div class="container row p-3">
+      <h4>Tasks list</h4>
+      <p></p>
+      {% comment %} Form filter table {% endcomment %}
+      <form name="taskFilter">
+        <div class="row">
+          <div class="col">
+            <select name="countObjectsOnPage" id="objOnPage" class="form-select">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+            </select>
+            <label class="fst-italic fw-light form-label" for="objOnPage">objects on page</label>
+          </div>
+          <div class="col">
+            <input name="taskIds" class="form-control" type="text" id="idTask" placeholder="1, 2, 3...">
+            <label class="fst-italic fw-light form-label" for="idTask">insert ids or lose empty ones</label>
+          </div>
+          <div class="col">
+            <select name="taskStatus" id="task_choose" class="form-select">
+              <option value="all">all</option>
+              <option value="draft">draft</option>
+              <option value="ready_for_delivery">ready for delivery</option>
+              <option value="completed">completed</option>
+              <option value="partly_completed">partly completed</option>
+              <option value="error">error</option>
+            </select>
+            <label class="fst-italic fw-light form-label" for="task_choose">choose status</label>
+          </div>
+          <div class="col">
+              <input
+                class="btn btn-primary float-end"
+                value="UPDATE TABLE"
+                type="button"
+                onclick="createTable(
+                    '{% url 'telegram-api:tasks' %}',
+                    '{% url 'front:tasks' %}',
+                    )">
+          </div>
+        </div>
+      </form>
+      {% comment %} /end Form filter table {% endcomment %}
+      {% comment %} Table {% endcomment %}
+      <table id="tableTask" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th data-sort="id" scope="col">id</th>
+                <th scope="col">status</th>
+                <th scope="col">created</th>
+                <th scope="col">performed</th>
+                <th scope="col">description</th>
+                <th scope="col">link</th>
+            </tr>
+        </thead>
+        <tbody id="tableTaskBody" class="table-light"></tbody>
+      </table>
+      <nav id="tableTaskNav" aria-label="...">
+        <ul id="tasksPages" class="pagination"></ul>
+      </nav>
+      {% comment %} /end Table {% endcomment %}
+  </div>
 </section>
 {% endblock %}

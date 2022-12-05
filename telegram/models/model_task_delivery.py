@@ -11,8 +11,6 @@ class TaskDeliveryStatus(enum.Enum):
 
 	DRAFT = 'draft'
 	READY_FOR_DELIVERY = 'ready_for_delivery'
-	PENDING = 'pending'
-	IN_PROGRESS = 'in_progress'
 	COMPLETED = 'completed'
 	PARTLY_COMPLETED = 'partly_completed'
 	ERROR = 'error'
@@ -31,7 +29,7 @@ class TaskDelivery:
 			performed_date=None
 	):
 		self.task_id: int = task_id
-		self.status = status
+		self.status: str = status
 		self.telegram_ids: [str] = telegram_ids
 		self.message: str = message
 		self.description: str = description
