@@ -2,18 +2,17 @@ import asyncio
 import json
 import logging
 
-from celery.result import AsyncResult
 from django.http import JsonResponse, HttpResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 from celery_django.celeryapp import get_celery_life
-from telegram.models.model_task_delivery import TasksSearchRequest, TaskDelivery, TaskDeliveryStatus
 from telegram.models.model_error_response import ErrorResponse
+from telegram.models.model_task_delivery import TaskDelivery, TasksSearchRequest, TaskDeliveryStatus
 from telegram.service.delivery_task_service import DeliveryTaskService
 from telegram.service.time_service import DateTimeEncoder
-from telegram.tasks import celeryStartDeliveryTask
+from telegram.tasks import celeryStartDelivery
 
 _logger = logging.getLogger('custom')
 
@@ -64,17 +63,11 @@ class DeliveryStartHandler(View):
 	async def post(request):
 		search_request = TasksSearchRequest(status=TaskDeliveryStatus.READY_FOR_DELIVERY.name_status)
 		_logger.debug(f'Search request: {search_request.toDict()}')
-		tasks_found: [TaskDelivery] = await DeliveryTaskService.findTasks(search_request)
-		if tasks_found is not None and len(tasks_found) != 0:
-			_logger.debug(f'Found {len(tasks_found)} tasks')
-			for task in tasks_found:
-				id_delivery: int = task.task_id
-				result = celeryStartDeliveryTask.delay(id_delivery)
-				_logger.debug(f'Result: {result}')
-				id_task = result.task_id
-				celery_task = AsyncResult(id_task)
-				result_status = celery_task.state
-				_logger.debug(result_status)
+		deliveries_found: [TaskDelivery] = await DeliveryTaskService.findTasks(search_request)
+		if deliveries_found is not None and len(deliveries_found) != 0:
+			_logger.debug(f'Found {len(deliveries_found)} tasks')
+			deliveries_id = [i.task_id for i in deliveries_found]
+			celeryStartDelivery.delay(deliveries_id)
 			data = {
 				"response": "Delivery messages started",
 				"task_process": f'Process is {get_celery_life()}'

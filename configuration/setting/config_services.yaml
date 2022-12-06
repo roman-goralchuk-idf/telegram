@@ -10,7 +10,7 @@
         databaseName: parser_telegram
         collectionMessage: messages
         collectionChannel: channels
-        collectionTask: tasks
+        collectionDelivery: delivery
 
       mysql:
         host: 192.168.190.56
@@ -45,7 +45,7 @@
         databaseName: parser_telegram
         collectionMessage: messages
         collectionChannel: channels
-        collectionTask: tasks
+        collectionDelivery: delivery
 
       mysql:
         host: localhost
