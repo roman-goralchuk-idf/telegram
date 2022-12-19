@@ -18,17 +18,17 @@ class MongoRepositoryDelivery(MongoRepository):
 
 	async def upsertOneById(self, task: TaskDelivery):
 		try:
-			if task.del_id is None:
-				task.del_id = await self._generateTaskId()
+			if task.task_id is None:
+				task.task_id = await self._generateTaskId()
 			query = {
-				"task_id": task.del_id
+				"task_id": task.task_id
 			}
 			value = {
 				"$set": task.toDict()
 			}
 			result = self._collection.update_many(filter=query, update=value, upsert=True)
 			operation_response = {
-				"task_id": task.del_id,
+				"task_id": task.task_id,
 				"operation_result": result.acknowledged,
 				"update_count": result.modified_count
 			}

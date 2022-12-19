@@ -7,7 +7,7 @@ account_1:
     phone: +375293372269
     session: session_account_1
     parse_mode: HTML
-    waiting_between_messages_sec: 10
+    waiting_between_messages_sec: 1
 
 account_2:
   telegram:
