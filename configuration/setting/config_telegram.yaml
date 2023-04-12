@@ -2,26 +2,26 @@
 
 account_1:
   telegram:
-    api_id: 17436154
-    api_hash: e54c86627e6fed51dd4c548dfc920094
-    phone: +375293372269
+    api_id: "***"
+    api_hash: "***"
+    phone: "***"
     session: session_account_1
     parse_mode: HTML
     waiting_between_messages_sec: 1
 
 account_2:
   telegram:
-    api_id: 19358343
-    api_hash: 691546d6af65c083cbadb4fa55889382
-    phone: +375445900823
+    api_id: "***"
+    api_hash: "***"
+    phone: "***"
     session: session_account_2
     parse_mode: HTML
     waiting_between_messages_sec: 1
 
 account_test:
   telegram:
-    api_id: 17436154
-    api_hash: e54c86627e6fed51dd4c548dfc920094
+    api_id: "***"
+    api_hash: "***"
     phone: 9996621234
     session: session_test
     parse_mode: HTML
