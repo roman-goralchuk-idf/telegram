@@ -4,13 +4,13 @@
 
 {% block script %}
 {% load static %}
-<script src="{% static 'js/tasks.js' %}"></script>
-<script src="{% static 'js/tasksTable.js' %}"></script>
+<script src="{% static 'js/delivery/deliveries.js' %}"></script>
+<script src="{% static 'js/delivery/deliveryTable.js' %}"></script>
 <script>
     window.onload = (event) => {
       createTable(
-        '{% url 'telegram-api:tasks' %}',
-        '{% url 'front:tasks' %}',
+        '{% url 'telegram-api:deliveries' %}',
+        '{% url 'front:deliveries' %}',
         )
     }
 </script>
@@ -26,36 +26,36 @@
   </div>
   <div class="row p-3 row-cols-2">
     {% comment %} First action with button {% endcomment %}
-    <div id="task_start_description" class="row row-cols-2">
+    <div id="delivery_start_description" class="row row-cols-2">
       <div class="col-md-8">
         <p>{{ message_for_delivery }}</p>
       </div>
       <div class="col-md-4">
-        <div id="task_button">
+        <div id="delivery_button">
           <input
             class="btn btn-primary btn-lg float-end"
-            onclick="startDelivery('{% url 'telegram-api:tasks_start' %}')"
+            onclick="startDelivery('{% url 'telegram-api:delivery_start' %}')"
             type="submit"
             value="START">
         </div>
       </div>
     </div>
-    <div id="task_start_response" class="p-5 bg-light rounded" style="display: none"></div>
+    <div id="delivery_start_response" class="p-5 bg-light rounded" style="display: none"></div>
     {% comment %} /end 1st {% endcomment %}
     {% comment %} Second action with button {% endcomment %}
     <div class="row row-cols-2">
       <div class="col-md-8">
-        <p>{{ message_for_new_task }}</p>
+        <p>{{ message_for_new_delivery }}</p>
       </div>
       <div class="col-md-4">
-        <div id="task_new_button">
+        <div id="delivery_new_button">
           <input
             class="btn btn-primary btn-lg float-end"
-            onclick="startDelivery('{% url 'telegram-api:tasks_start' %}')"
+            onclick="startDelivery('{% url 'telegram-api:delivery_start' %}')"
             type="submit"
             value="CREATE" >
         </div>
-        <div id="task_new" class="p-5 bg-primary text-white rounded" style="display: none"></div>
+        <div id="delivery_new" class="p-5 bg-primary text-white rounded" style="display: none"></div>
       </div>
     </div>
     {% comment %} /end 2nd {% endcomment %}
@@ -65,10 +65,10 @@
  
   <hr class="bg-light border-2 border-top border-dark">
   <div class="container row p-3">
-      <h4>Tasks list</h4>
+      <h4>Deliveries list</h4>
       <p></p>
       {% comment %} Form filter table {% endcomment %}
-      <form name="taskFilter">
+      <form name="deliveriesFilter">
         <div class="row">
           <div class="col">
             <select name="countObjectsOnPage" id="objOnPage" class="form-select">
@@ -82,11 +82,11 @@
             <label class="fst-italic fw-light form-label" for="objOnPage">objects on page</label>
           </div>
           <div class="col">
-            <input name="taskIds" class="form-control" type="text" id="idTask" placeholder="1, 2, 3...">
-            <label class="fst-italic fw-light form-label" for="idTask">insert ids or lose empty ones</label>
+            <input name="deliveriesIds" class="form-control" type="text" id="idDelivery" placeholder="1, 2, 3...">
+            <label class="fst-italic fw-light form-label" for="idDelivery">insert ids or lose empty ones</label>
           </div>
           <div class="col">
-            <select name="taskStatus" id="task_choose" class="form-select">
+            <select name="deliveryStatus" id="delivery_choose" class="form-select">
               <option value="all">all</option>
               <option value="draft">draft</option>
               <option value="ready_for_delivery">ready for delivery</option>
@@ -94,7 +94,7 @@
               <option value="partly_completed">partly completed</option>
               <option value="error">error</option>
             </select>
-            <label class="fst-italic fw-light form-label" for="task_choose">choose status</label>
+            <label class="fst-italic fw-light form-label" for="delivery_choose">choose status</label>
           </div>
           <div class="col">
               <input
@@ -102,15 +102,15 @@
                 value="UPDATE TABLE"
                 type="button"
                 onclick="createTable(
-                    '{% url 'telegram-api:tasks' %}',
-                    '{% url 'front:tasks' %}',
+                    '{% url 'telegram-api:deliveries' %}',
+                    '{% url 'front:deliveries' %}',
                     )">
           </div>
         </div>
       </form>
       {% comment %} /end Form filter table {% endcomment %}
       {% comment %} Table {% endcomment %}
-      <table id="tableTask" class="table table-striped">
+      <table id="tableDelivery" class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -122,10 +122,10 @@
                 <th scope="col">link</th>
             </tr>
         </thead>
-        <tbody id="tableTaskBody" class="table-light"></tbody>
+        <tbody id="tableDeliveryBody" class="table-light"></tbody>
       </table>
-      <nav id="tableTaskNav" aria-label="...">
-        <ul id="tasksPages" class="pagination"></ul>
+      <nav id="tableDeliveryNav" aria-label="...">
+        <ul id="deliveryPage" class="pagination"></ul>
       </nav>
       {% comment %} /end Table {% endcomment %}
   </div>

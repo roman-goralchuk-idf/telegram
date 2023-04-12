@@ -1,0 +1,27 @@
+.bg-primary {
+    background-color: rgba(40, 100, 127, 1.0)!important;
+}
+
+.btn-primary {
+    background-color: rgba(40, 100, 127, 1.0)!important;
+    border-color: rgba(40, 100, 127, 1.0)!important;
+}
+
+div.text-center.p-3 {
+    background-color: rgba(0, 0, 0, 0.2)!important;
+}
+
+.form-label {
+    padding-left: .375rem;
+    font-size: 1rem;
+}
+
+.page-link {
+    color: rgba(40, 100, 127, 1.0)!important;
+}
+
+.page-item.active .page-link {
+    color: #fff!important;
+    background-color: rgba(40, 100, 127, 1.0)!important;
+    border-color: rgba(40, 100, 127, 1.0)!important;
+}

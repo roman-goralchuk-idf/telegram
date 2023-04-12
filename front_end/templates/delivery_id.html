@@ -3,7 +3,7 @@
 {% load template_tag %}
 
 {% block script %}
-<script src="{% static 'js/taskId.js' %}"></script>
+<script src="{% static 'js/delivery/deliveryId.js' %}"></script>
 <script>
     findTaskById('{% url 'telegram-api:tasks' %}', {{ statuses|safe }})
 </script>
