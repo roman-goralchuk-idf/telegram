@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "1b39ff16-1602-4cd5-ae6c-0d71125e53c3",
+		"name": "Telegram",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19834281"
+	},
+	"item": [
+		{
+			"name": "Django",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "HelloWorld",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/members/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"members",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api_base",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/telegram/api_base/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram",
+								"api_base",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login_check_session_GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/telegram-api/login/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login_send_code_POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 22222\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram_api/login/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram_api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Channels_get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channel_ids\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/channels/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"channels",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Channels_add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channel_ids\": [\n        \"habr_career\", \n        \"BoardOutsource\",\n        \"Remoteit\",\n        \"gamedevjob\",\n        \"itlenta\",\n        \"seohr\",\n        \"digital_hr\",\n        \"geekjobs\",\n        \"myjobit\",\n        \"Getitrussia\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/channels/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"channels",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Channels_put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"channel_id\": 49849,\n        \"status\": \"new\"\n    },\n    {\n        \"channel_id\": 200\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram_api/channels/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram_api",
+								"channels",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Channels_delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channel_ids\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/channels/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"channels",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Telegram_UPDATE",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/update/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deliveries_GET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"task_ids\":[],\n    \"status\": \"ready_for_delivery\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/deliveries/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"deliveries",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task_POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"task_id\": 9,\n            \"status\": \"ready_for_delivery\",\n            \"telegram_ids\": [\"me\", \"@StepanDudkin\"],\n            \"message\": \"<b>Hello my Dear Me</b><br>You are the best!\",\n            \"description\": \"Test task. I am sending messages to myself\",\n            \"delivery_scheduled\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/deliviries/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"deliviries",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deliviries_START",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/deliveries/start",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"deliveries",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task_GET_byID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/telegram-api/tasks/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"telegram-api",
+								"tasks",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Celery Task Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/celery-api/status/6267643c-63c3-4067-b840-cab4e7101da6",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"celery-api",
+								"status",
+								"6267643c-63c3-4067-b840-cab4e7101da6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
