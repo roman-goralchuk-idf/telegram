@@ -16,8 +16,9 @@ python3 -m celery -A celery_django worker -l info
 [test_data/telegram_test_db/docker-compose.yaml](test_data/telegram_test_db/docker-compose.yaml)
 ### Тестовые данные как залить
 1. Переводим конфиги в тест, чтобы данные писались в локальную базу -> [main config](configuration/setting/config_app.yaml)
-2. В папке [test_data/full](test_data/full) лежат все данные от каналов в json
-3. Запускаем скрипт [Starter.py](test_data/starter.py), выбираем вверху "Current File" и жмем зеленую стрелку, ждем. В списке скрипта можно выбрать нужные каналы
+2. В папке [test_data/full/archive](test_data/full/archive) находятся архивы с тестовыми данными, их необходимо распаковать в [test_data/full](test_data/full)
+3. В папке [test_data/full](test_data/full) лежат все данные от каналов в json
+4. Запускаем скрипт [Starter.py](test_data/starter.py), выбираем вверху "Current File" и жмем зеленую стрелку, ждем. В списке скрипта можно выбрать нужные каналы
 ### Аккаунты
 После подтверждения регистрации разработчика, необходимо заполнить [config_telegram](configuration/setting/config_telegram.yaml) там, где отмечено ***
 ### Проверка подключения
