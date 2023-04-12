@@ -4,8 +4,7 @@ from . import views
 app_name = 'front'
 urlpatterns = [
 	path('', views.index),
-	path('test', views.test),
-	path('tasks', views.page_tasks, name='tasks'),
-	path('tasks/<int:task_id>', views.page_task_id),
-	path('tasks/new', views.page_task_new, name='new_task'),
+	path('deliveries', views.page_deliveries, name='deliveries'),
+	path('deliveries/<int:delivery_id>', views.page_delivery_id),
+	path('deliveries/new', views.page_delivery_new, name='new_deliveries'),
 ]

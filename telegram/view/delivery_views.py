@@ -34,23 +34,23 @@ class DeliveryHandler(View):
 class DeliveryTaskHandler(View):
 
 	@staticmethod
-	async def get(request, task_id):
-		result: TaskDelivery = await DeliveryTaskService().findTasksById(task_id)
+	async def get(request, delivery_id):
+		result: TaskDelivery = await DeliveryTaskService().findTasksById(delivery_id)
 		if result is not None:
 			result_dicts = result.toDict()
 			_logger.debug(result_dicts)
 			response = json.dumps(result_dicts, cls=DateTimeEncoder)
 			return HttpResponse(response, content_type='application/json')
 		else:
-			error_response = json.dumps(ErrorResponse(f'Task with id \'{task_id}\' not found').__dict__)
+			error_response = json.dumps(ErrorResponse(f'Delivery with id \'{delivery_id}\' not found').__dict__)
 			return HttpResponse(error_response, content_type='application/json')
 
 	@staticmethod
 	async def post(request):
 		request_body = json.loads(request.body)
-		task: TaskDelivery = TaskDelivery(None, None, None, None)
-		task.fromDict(request_body)
-		result = await DeliveryTaskService().newOrUpdateTask(task)
+		delivery: TaskDelivery = TaskDelivery(None, None, None, None)
+		delivery.fromDict(request_body)
+		result = await DeliveryTaskService().newOrUpdateTask(delivery)
 		response = {
 			"result": result
 		}

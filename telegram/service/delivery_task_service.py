@@ -18,7 +18,7 @@ class DeliveryTaskService:
 		return result
 
 	@staticmethod
-	async def findTasksById(task_id) -> TaskDelivery:
-		result: TaskDelivery = await MongoRepositoryDelivery().findById(task_id)
+	async def findTasksById(delivery_id) -> TaskDelivery:
+		result: TaskDelivery = await MongoRepositoryDelivery().findById(delivery_id)
 		return result
 

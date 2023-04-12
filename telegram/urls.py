@@ -9,8 +9,8 @@ app_name = 'telegram-api'
 urlpatterns = [
 	path('login/', LoginHandler.as_view(), name='login'),
 	path('update/', UpdateHandler.as_view(), name='update'),
-	path('tasks/', DeliveryHandler.as_view(), name='tasks'),
-	path('tasks/<int:task_id>', DeliveryTaskHandler.as_view()),
-	path('tasks/start', DeliveryStartHandler.as_view(), name='tasks_start'),
+	path('deliveries/', DeliveryHandler.as_view(), name='deliveries'),
+	path('deliveries/<int:delivery_id>', DeliveryTaskHandler.as_view()),
+	path('deliveries/start', DeliveryStartHandler.as_view(), name='deliveries_start'),
 	path('channels/', ChannelHandler.as_view(), name='channels'),
 ]

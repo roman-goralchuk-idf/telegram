@@ -1,4 +1,3 @@
-import json
 import logging
 
 from django.shortcuts import render
@@ -8,7 +7,7 @@ from telegram.models.model_task_delivery import TaskDeliveryStatus
 _logger = logging.getLogger('custom')
 
 
-def _getTaskDeliveryStatuses() -> []:
+def _getDeliveryStatuses() -> []:
 	return [status.value for status in TaskDeliveryStatus]
 
 
@@ -19,42 +18,42 @@ def index(request):
 	return render(request, "index.html", context=context)
 
 
-def page_tasks(request):
+def page_deliveries(request):
 	context = {
-		"pagename": "Delivery tasks",
+		"pagename": "Deliveries",
 		"description": """
-				Tasks service are created for mass sending of messages to clients. 
-				The sending speed is limited, so tasks are created and transferred to the service for sending.
+				Delivery service are created for mass sending of messages to clients. 
+				The sending speed is limited, so deliveries are created and transferred to the service for sending.
 			""",
 		"message_for_delivery": """
-			If you click the button, all tasks with the status "ready for delivery" will be launched.
+			If you click the button, all deliveries with the status "ready for delivery" will be launched.
 			You can come back to this page later and check the statuses...
 		""",
-		"message_for_new_task": """
+		"message_for_new_delivery": """
 				If you click the button, you will can make a new task
 			""",
 	}
-	return render(request, 'tasks.html', context=context)
+	return render(request, 'deliveries.html', context=context)
 
 
-def page_task_id(request, task_id):
+def page_delivery_id(request, delivery_id):
 	context = {
-		"pagename": f'Task {task_id}',
-		"statuses": _getTaskDeliveryStatuses()
+		"pagename": f'Task {delivery_id}',
+		"statuses": _getDeliveryStatuses()
 	}
 	print(context)
-	return render(request, "tasks_id.html", context=context)
+	return render(request, "delivery_id.html", context=context)
 
 
-def page_task_new(request):
+def page_delivery_new(request):
 	context = {
-		"pagename": f'Create new task',
+		"pagename": f'Create new Delivery',
 		"description": """
-					Tasks service are created for mass sending of messages to clients. 
-					The sending speed is limited, so tasks are created and transferred to the service for sending.
+					Delivery service are created for mass sending of messages to clients. 
+					The sending speed is limited (no more than 30 messages per second), so tasks are created and transferred to the service for sending.
 				""",
 	}
-	return render(request, "tasks_new.html", context=context)
+	return render(request, "delivery_new.html", context=context)
 
 
 def error_404_page_not_found_view(request, exception):
@@ -87,7 +86,3 @@ def error_403_permission_denied_view(request, exception):
 		"message": "Permission denied!"
 	}
 	return render(request, "403.html", context=data)
-
-
-def test(request):
-	return render(request, "test.html")
