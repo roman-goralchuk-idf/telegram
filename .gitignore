@@ -162,7 +162,7 @@ cython_debug/
 /logs
 *.pdf
 
-/telegram/telegram_session
+telegram/telegram_session/
 
 # Docker
 !docker/**/build
