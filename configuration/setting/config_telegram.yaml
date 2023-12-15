@@ -2,31 +2,31 @@
 
 account_1:
   telegram:
-    api_id: "***"
-    api_hash: "***"
-    phone: "***"
+    api_id: xxx
+    api_hash: xxx
+    phone: xxx
     session: session_account_1
     parse_mode: HTML
     waiting_between_messages_sec: 1
 
 account_2:
   telegram:
-    api_id: "***"
-    api_hash: "***"
-    phone: "***"
+    api_id: xxx
+    api_hash: xxx
+    phone: xxx
     session: session_account_2
     parse_mode: HTML
     waiting_between_messages_sec: 1
 
 account_test:
   telegram:
-    api_id: "***"
-    api_hash: "***"
+    api_id: xxx
+    api_hash: xxx
     phone: 9996621234
     session: session_test
     parse_mode: HTML
     waiting_between_messages_sec: 1
-    host: 149.154.167.40
+    host: xxx
     port: 443
     dc: 2
     code: 22222

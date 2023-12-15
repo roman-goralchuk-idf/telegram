@@ -11,6 +11,12 @@ _logger = logging.getLogger('custom')
 
 
 class TelegramApiService:
+	__instance = None
+
+	def __new__(cls, *args, **kwargs):
+		if cls.__instance is None:
+			cls.__instance = super().__new__(cls)
+		return cls.__instance
 
 	def __init__(self):
 		self._api_id = configTelegram['telegram']['api_id']
@@ -29,7 +35,7 @@ class TelegramApiService:
 			client.session.set_dc(dc, str(host), port)
 			return client
 		else:
-			return client
+			return TelegramClient(join(TELEGRAM_SESSION, self._session_name), self._api_id, self._api_hash)
 
 	def getPhoneNumber(self) -> str:
 		name_phone_file = 'phone_for_debugging.txt'

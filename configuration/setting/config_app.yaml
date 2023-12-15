@@ -1,5 +1,5 @@
 # Application
 appName: 'Telegram Super Service'
 environment: test #test #prod
-telegram_account: account_1 #account_2 #account_1 #account_test
+telegram_account: account_test #account_2 #account_1 #account_test
 time_zone: Pacific/Tahiti #Europe/Minsk #Europe/Moscow #Etc/GMT+3 #Etc/GMT+4

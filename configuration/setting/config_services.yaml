@@ -3,20 +3,20 @@
   prod:
     database:
       mongo:
-        host: 192.168.190.56
+        host: localhost
         port: 27017
         user: app
-        password: dafUZT2dbOSp0BbcxADF
+        password: pasaword
         databaseName: parser_telegram
         collectionMessage: messages
         collectionChannel: channels
         collectionDelivery: delivery
 
       mysql:
-        host: 192.168.190.56
+        host: localhost
         port: 3306
-        user: mmdev
-        password: dafUZT2dbOSp0BbcxADF
+        user: xxx
+        password:  pasaword
         databaseName: parser_telegram
 
       redis:
@@ -25,7 +25,7 @@
         password: pasaword
 
     rabbitmq:
-      host: db.alpha.idflab
+      host: localhost
       portApp: 5672
       portAdmin: 15672
       user: guest

@@ -2,7 +2,7 @@ import logging
 
 from celery import shared_task
 
-from telegram import client_telegram
+from telegram.service.telegram_client_service import TelegramApiService
 from telegram.service.telegram_delivery_start import DeliveryStartingService
 from telegram.service.telegram_update_service import TelegramUpdateService
 
@@ -11,12 +11,14 @@ _logger = logging.getLogger('custom')
 
 @shared_task
 def celeryStartDelivery(deliveries_id):
+	client_telegram = TelegramApiService().getTelegramClient()
 	with client_telegram:
 		client_telegram.loop.run_until_complete(DeliveryStartingService().startDeliveries(deliveries_id))
 
 
 @shared_task
 def celeryTelegramUpdateMessages():
+	client_telegram = TelegramApiService().getTelegramClient()
 	with client_telegram:
 		client_telegram.loop.run_until_complete(TelegramUpdateService().updateMessages())
 

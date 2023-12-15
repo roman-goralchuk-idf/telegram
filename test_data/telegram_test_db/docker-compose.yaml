@@ -10,6 +10,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: app
       MONGO_INITDB_ROOT_PASSWORD: pasaword
+      MONGO_INITDB_DATABASE: parser_telegram
     ports:
       - "27017:27017"
 
